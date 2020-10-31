@@ -1,0 +1,77 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Rock.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.02332
+height = 6.04573
+
+[sub_resource type="ParticlesMaterial" id=2]
+emission_shape = 1
+emission_sphere_radius = 2.0
+flag_disable_z = true
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 34.48
+damping = 1.0
+angle = 180.0
+scale_random = 0.34
+color = Color( 0.941176, 0.329412, 0.133333, 1 )
+hue_variation_random = 0.5
+
+[sub_resource type="Animation" id=3]
+resource_name = "Explosión"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Particles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_destroy"
+} ]
+}
+
+[node name="Rock" type="KinematicBody2D"]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource( 1 )
+speed = 200
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0.498039, 0.498039, 0.498039, 1 )
+polygon = PoolVector2Array( -6.48, 0, -6.01036, -2.76929, -4.50776, -4.80222, -2.56322, -6.21644, 0, -6.8, 2.51911, -6.43741, 4.72882, -4.80222, 6.05465, -2.81349, 6.8, 0, 6.05465, 2.35723, 4.77301, 4.34597, 2.91686, 5.76019, 0, 6.8, -2.78419, 5.98116, -4.59615, 4.52275, -6.05456, 2.71079 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, 1.88988 )
+rotation = 0.0248958
+shape = SubResource( 1 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+emitting = false
+amount = 64
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.76
+process_material = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+"anims/Explosión" = SubResource( 3 )

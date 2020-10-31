@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Objects/Target.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Obstacle.gd" type="Script" id=2]
+[ext_resource path="res://Assets/ghost.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 24.7666
+height = 14.3138
+
+[node name="Obstacle" instance=ExtResource( 1 )]
+collision_layer = 2
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="0"]
+position = Vector2( -1.00113, 7.15256e-06 )
+scale = Vector2( 1.81342, 2.25141 )
+frames = SubResource( 5 )
+frame = 3
+playing = true
+
+[node name="Sprite" parent="." index="1"]
+texture = null
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2( -0.667419, 2.00226 )
+shape = SubResource( 6 )
+
+[node name="MoveTween" type="Tween" parent="." index="4"]
+
+[node name="Timer" type="Timer" parent="." index="5"]
+wait_time = 2.0
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
